@@ -11,8 +11,29 @@ yarn
 
 yarn dev
 
+```
+
+
+
+## Router
+
+```sh
 
 yarn add react-router
+
+```
+
+
+
+## Redux
+
+```sh
+
+yarn add @reduxjs/toolkit react-redux
+
+
+Config to: https://redux-toolkit.js.org/tutorials/quick-start
+
 
 ```
 
