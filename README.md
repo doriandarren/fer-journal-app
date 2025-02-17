@@ -24,6 +24,18 @@ yarn add react-router
 ```
 
 
+## Firebase
+
+```sh
+
+yarn add firebase
+
+```
+
+
+
+
+
 
 ## Redux
 

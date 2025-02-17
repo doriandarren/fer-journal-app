@@ -2,25 +2,36 @@ import { Google } from "@mui/icons-material";
 import { Button, Grid2, Link, TextField, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router";
 import { AuthLayout } from "../layout/AuthLayout";
-import { useForm } from "../../../hooks/useForm";
+import { useForm } from "../../../hooks";
+import { useDispatch, useSelector } from "react-redux";
+import { checkingAuthentication, startGoogleSignIn } from "../../../store/auth";
+import { useMemo } from "react";
 
 export const LoginPage = () => {
+
+  const {status} = useSelector( state => state.auth );
+  const dispatch = useDispatch();
 
   const { email, password, onInputChange } = useForm({
     email: 'dorian@gmail.com',
     password: '123456',
   });
 
+  const isAuthenticating = useMemo( () => status === 'checking', [status] )
+
+
 
   const onSubmit = (event) => {
     event.preventDefault();
-
-
     console.log({ email, password });
-
-
+    dispatch(checkingAuthentication(email, password));
   }
 
+
+  const onGoogleSignIn = () => {
+    console.log('onGoogleSignIn');
+    dispatch(startGoogleSignIn(email, password));
+  }
 
 
 
@@ -59,13 +70,23 @@ export const LoginPage = () => {
             <Grid2 container spacing={2} sx={{ mb: 2, mt: 1}}>
 
               <Grid2 xs={12} sm={6}>
-                <Button type="submit" variant="contained" fullWidth >
+                <Button 
+                  disabled={ isAuthenticating }
+                  type="submit" 
+                  variant="contained" 
+                  fullWidth 
+                >
                   Login
                 </Button>
               </Grid2>
 
               <Grid2 xs={12} sm={6}>
-                <Button variant="contained" fullWidth >
+                <Button 
+                  disabled={ isAuthenticating }
+                  variant="contained" 
+                  fullWidth
+                  onClick={onGoogleSignIn}
+                >
                   <Google />
                   <Typography sm={{ ml:1}} >Google</Typography>
                 </Button>
