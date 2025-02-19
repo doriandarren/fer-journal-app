@@ -2,13 +2,22 @@ import { Button, Grid2, Link, TextField, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../../hooks";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { startCreatingUserWithEmailPassword } from "../../../store/auth";
 
 
+
+// const formData = {
+//   email: 'dorian@gmail.com',
+//   password: '123456',
+//   displayName: 'Dorian',
+// }
 
 const formData = {
-  email: 'dorian@gmail.com',
-  password: '123456',
-  displayName: 'Dorian',
+  email: '',
+  password: '',
+  displayName: '',
 }
 
 
@@ -22,21 +31,29 @@ const formValidations = {
 
 export const RegisterPage = () => {
 
+  const dispatch = useDispatch();
+
+  const [formSubmitted, setFormSubmitted] = useState(false);
   
   const { 
     formState, displayName, email, password, onInputChange,
     isFormValid, displayNameValid, emailValid, passwordValid
   } = useForm(formData, formValidations);
 
-  console.log(displayNameValid);
+  
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log(formState);
+    setFormSubmitted(true);
+
+    if(!isFormValid) return;
+
+    dispatch( startCreatingUserWithEmailPassword(formState));
   }
 
   return (
     <AuthLayout title="Crear cuenta">
+
        <form onSubmit={ onSubmit }>
           <Grid2 container 
             direction="column"
@@ -51,6 +68,8 @@ export const RegisterPage = () => {
                 name="displayName"
                 value={displayName}
                 onChange={onInputChange}
+                error={ !!displayNameValid && formSubmitted }
+                helperText={!!displayNameValid && formSubmitted ? displayNameValid : ''}
               />
             </Grid2>
             
@@ -63,6 +82,8 @@ export const RegisterPage = () => {
                 name="email"
                 value={email}
                 onChange={onInputChange}
+                error={ !!emailValid && formSubmitted }
+                helperText={!!emailValid && formSubmitted ? emailValid : ''}
               />
             </Grid2>
 
@@ -75,6 +96,8 @@ export const RegisterPage = () => {
                 name="password"
                 value={password}
                 onChange={onInputChange}
+                error={ !!passwordValid && formSubmitted}
+                helperText={!!passwordValid && formSubmitted ? passwordValid : ''}
               />
             </Grid2>
 
