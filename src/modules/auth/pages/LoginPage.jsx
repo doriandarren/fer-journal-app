@@ -75,11 +75,11 @@ export const LoginPage = () => {
             <Grid2 
               container
               display={ !!errorMessage ? '' : 'none' }
-              sx={{ mt:1, display:'flex', justifyContent:'center' }}
             >
 
               <Grid2 
                 xs={12} 
+                sx={{ mt:1 }}
               >
                 <Alert severity="error"> {errorMessage} </Alert>
               </Grid2>
