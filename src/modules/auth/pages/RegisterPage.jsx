@@ -9,9 +9,9 @@ import { startCreatingUserWithEmailPassword } from "../../../store/auth";
 
 
 const formData = {
-  email: 'johndoe@gmail.com',
+  email: 'nando@gmail.com',
   password: '123456',
-  displayName: 'John',
+  displayName: 'Nando',
 }
 
 

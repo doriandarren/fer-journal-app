@@ -1,19 +1,19 @@
 import { Google } from "@mui/icons-material";
-import { Button, Grid2, Link, TextField, Typography } from "@mui/material";
+import { Alert, Button, Grid2, Link, TextField, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../../hooks";
 import { useDispatch, useSelector } from "react-redux";
-import { checkingAuthentication, startGoogleSignIn } from "../../../store/auth";
+import { checkingAuthentication, startGoogleSignIn, startLoginWithEmailPassword } from "../../../store/auth";
 import { useMemo } from "react";
 
 export const LoginPage = () => {
 
-  const {status} = useSelector( state => state.auth );
+  const { status, errorMessage } = useSelector( state => state.auth );
   const dispatch = useDispatch();
 
   const { email, password, onInputChange } = useForm({
-    email: 'dorian@gmail.com',
+    email: 'nando@gmail.com',
     password: '123456',
   });
 
@@ -23,8 +23,11 @@ export const LoginPage = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log({ email, password });
-    dispatch(checkingAuthentication(email, password));
+    
+    //console.log({ email, password });
+
+    dispatch(startLoginWithEmailPassword({ email, password }));
+
   }
 
 
@@ -67,7 +70,31 @@ export const LoginPage = () => {
             </Grid2>
 
 
-            <Grid2 container spacing={2} sx={{ mb: 2, mt: 1}}>
+
+
+            <Grid2 
+              container
+              display={ !!errorMessage ? '' : 'none' }
+              sx={{ mt:1, display:'flex', justifyContent:'center' }}
+            >
+
+              <Grid2 
+                xs={12} 
+              >
+                <Alert severity="error"> {errorMessage} </Alert>
+              </Grid2>
+
+
+            </Grid2>
+
+
+
+
+            <Grid2 
+              container 
+              spacing={2} 
+              sx={{ mb: 2, mt: 1 }}
+            >
 
               <Grid2 xs={12} sm={6}>
                 <Button 
