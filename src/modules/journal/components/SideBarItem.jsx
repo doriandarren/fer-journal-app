@@ -20,10 +20,7 @@ export const SideBarItem = ({ title = '', body, id, date, imageUrls = [] }) => {
 
 
   const onClickNote = (note) => {
-    console.log(note);
-
     dispatch(setActiveNote({ title, body, id, date, imageUrls }))
-
   }
 
 
