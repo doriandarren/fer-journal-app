@@ -1,10 +1,13 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
+import 'sweetalert2/dist/sweetalert2.css';
 import { JournalApp } from './JournalApp.jsx';
 import { BrowserRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import { store } from './store';
+
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
